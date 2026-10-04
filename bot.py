@@ -1,16 +1,25 @@
 import asyncio
 import logging
 import sys
+import os
+from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.types import BotCommand
 from aiogram.fsm.storage.memory import MemoryStorage
 
+# UTF-8 stdout sozlash
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 from config import BOT_TOKEN, BOT_NAME
 from database import init_db
 
-# Handler routerlarni import qilish
+# Handler routerlar
 from handlers.start import router as start_router
 from handlers.bio import router as bio_router
 from handlers.username import router as username_router
@@ -31,10 +40,32 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+async def handle_health(request):
+    """Railway va serverlar uchun health-check handler"""
+    return web.Response(
+        text=f"{BOT_NAME} Telegram Bot is running 24/7 successfully!",
+        content_type="text/plain",
+        status=200,
+    )
+
+
+async def start_health_server():
+    """Railway port talab qilsa, uni qondirish uchun yengil HTTP server"""
+    port = int(os.getenv("PORT", 8080))
+    app = web.Application()
+    app.router.add_get("/", handle_health)
+    app.router.add_get("/health", handle_health)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+    logger.info(f"Health-check HTTP server running on 0.0.0.0:{port}")
+
+
 async def set_bot_commands(bot: Bot):
-    """Telegram botning asosiy buyruqlar menyusini sozlash"""
+    """Telegram bot buyruqlarini sozlash"""
     commands = [
-        BotCommand(command="start", description="Botni ishga tushirish (Bosh sahifa)"),
+        BotCommand(command="start", description="Botni ishga tushirish"),
         BotCommand(command="bio", description="Instagram BIO yaratish"),
         BotCommand(command="username", description="Noyob username takliflari"),
         BotCommand(command="caption", description="Post & Story caption yozish"),
@@ -49,6 +80,13 @@ async def main():
     logger.info("Initializing BioCraft AI database...")
     init_db()
 
+    # Agar Railway yoki hosting PORT taqdim etsa, health serverni yoqamiz
+    if os.getenv("PORT"):
+        try:
+            await start_health_server()
+        except Exception as e:
+            logger.warning(f"Health serverni ishga tushirishda ogohlantirish: {e}")
+
     logger.info(f"Starting {BOT_NAME} Telegram Bot...")
     bot = Bot(
         token=BOT_TOKEN,
@@ -57,7 +95,7 @@ async def main():
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
 
-    # Routerlarni tartib bilan ulash
+    # Routerlarni ulash
     dp.include_router(start_router)
     dp.include_router(bio_router)
     dp.include_router(username_router)
@@ -69,7 +107,7 @@ async def main():
 
     await set_bot_commands(bot)
 
-    # Kutilayotgan eski yangilanishlarni tozalash
+    # Eski webhook va kutilayotgan so'rovlarni tozalash
     await bot.delete_webhook(drop_pending_updates=True)
 
     bot_info = await bot.get_me()
@@ -86,4 +124,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.info("Dastur foydalanuvchi tomonidan to'xtatildi.")
+        logger.info("Dastur to'xtatildi.")
