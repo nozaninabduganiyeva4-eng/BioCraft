@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "railway": {
+      "serverUrl": "https://mcp.railway.com/sse"
+    }
+  }
+}
