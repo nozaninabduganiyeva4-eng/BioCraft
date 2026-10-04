@@ -1,54 +1,33 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from data.biology_topics import TOPICS
+from config import AVAILABLE_STYLES
 
 
-def get_topics_keyboard() -> InlineKeyboardMarkup:
+def get_style_selector_keyboard(current_style: str) -> InlineKeyboardMarkup:
     buttons = []
-    for key, topic in TOPICS.items():
-        buttons.append([InlineKeyboardButton(text=topic["title"], callback_data=f"topic_{key}")])
+    for key, data in AVAILABLE_STYLES.items():
+        is_active = "✅ " if key == current_style else ""
+        text = f"{is_active}{data['name']}"
+        buttons.append([InlineKeyboardButton(text=text, callback_data=f"set_style_{key}")])
+    buttons.append([InlineKeyboardButton(text="🏠 Asosiy menyuga qaytish", callback_data="go_main_menu")])
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 
-def get_sections_keyboard(topic_key: str) -> InlineKeyboardMarkup:
-    topic = TOPICS.get(topic_key)
-    buttons = []
-    if topic:
-        for sec in topic["sections"]:
-            buttons.append([InlineKeyboardButton(text=f"📌 {sec['name']}", callback_data=f"sec_{sec['id']}")])
-    buttons.append([InlineKeyboardButton(text="⬅️ Bo'limlar ro'yxatiga", callback_data="back_topics")])
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
-
-
-def get_section_detail_keyboard(topic_key: str) -> InlineKeyboardMarkup:
+def get_generation_actions_keyboard(task_type: str) -> InlineKeyboardMarkup:
     buttons = [
-        [InlineKeyboardButton(text="⬅️ Mavzularga qaytish", callback_data=f"topic_{topic_key}")],
-        [InlineKeyboardButton(text="🧪 Shu mavzudan test ishlash", callback_data="start_quiz")],
+        [
+            InlineKeyboardButton(text="🔄 Qayta yaratish", callback_data=f"regen_{task_type}"),
+            InlineKeyboardButton(text="🎨 Uslubni o'zgartirish", callback_data="change_style"),
+        ],
+        [
+            InlineKeyboardButton(text="🏠 Asosiy Menyu", callback_data="go_main_menu"),
+        ],
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 
-def get_quiz_keyboard(question_id: int, options: list) -> InlineKeyboardMarkup:
-    buttons = []
-    for idx, opt in enumerate(options):
-        buttons.append([
-            InlineKeyboardButton(
-                text=opt,
-                callback_data=f"ans_{question_id}_{idx}"
-            )
-        ])
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
-
-
-def get_next_quiz_keyboard() -> InlineKeyboardMarkup:
-    buttons = [
-        [InlineKeyboardButton(text="➡️ Keyingi Savol", callback_data="next_quiz")],
-        [InlineKeyboardButton(text="🏆 Reytingni ko'rish", callback_data="view_ranking")],
-    ]
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
-
-
-def get_fact_keyboard() -> InlineKeyboardMarkup:
-    buttons = [
-        [InlineKeyboardButton(text="🔄 Boshqa qiziqarli fakt", callback_data="next_fact")],
-    ]
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
+def get_cancel_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="❌ Bekor qilish", callback_data="cancel_action")]
+        ]
+    )
