@@ -1,113 +1,115 @@
-# 🌿 BioCraft — Telegram Ta'lim va Viktorina Boti (@takeabiobot)
+# ✨ BioCraft AI — Instagram Bio & SMM Sun'iy Intellekt Boti (@takeabiobot)
 
-![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)
-![aiogram Version](https://img.shields.io/badge/aiogram-3.x-green.svg)
-![Database](https://img.shields.io/badge/database-SQLite-lightgrey.svg)
-![Status](https://img.shields.io/badge/status-active-success.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-AI%20API-orange.svg)
+![Database](https://img.shields.io/badge/Database-SQLite-lightgrey.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
-**BioCraft** — maktab o'quvchilari, abituriyentlar hamda biologiya ixlosmandlari uchun mo'ljallangan interaktiv ta'lim, viktorina va qidiruv Telegram boti.
+**BioCraft AI** — Instagram va boshqa ijtimoiy tarmoqlar (Telegram, TikTok) uchun professional, estetik va diqqatni tortuvchi BIO (biografiya), noyob username, post va story captionlari, mos hashtaglar hamda statuslar yaratib beruvchi Telegram bot.
 
-Telegramda bot manzili: [@takeabiobot](https://t.me/takeabiobot)
-
----
-
-## ✨ Asosiy Imkoniyatlar
-
-1. 🧬 **Biologiya Bo'limlari (Nazariy Bilimlar):**
-   - 🌿 **Botanika:** O'simlik to'qimalari, fotosintez jarayoni va organlar tuzilishi.
-   - 🦁 **Zoologiya:** Umurtqasizlar va umurtqalilar (baliq, amfibiya, reptiliya, qush va sutemizuvchilar).
-   - 🫀 **Odam Anatomiyasi:** Yurak-qon tomir tizimi, qon guruhlari, asab tizimi va bosh miya bo'limlari.
-   - 🧬 **Sitologiya & Genetika:** Hujayra organoidlari, ATF sintezi, Mendel qonunlari va DNK/RNK.
-   - 🌍 **Ekologiya & Evolutsiya:** Oziq zanjiri, ekologik omillar va Darvin ta'limoti.
-
-2. 🧪 **Interaktiv Viktorina (Quiz Game):**
-   - Biologiyaning turli yo'nalishlaridan 4 variantli test savollari.
-   - Har bir to'g'ri javob uchun **+10 ball**.
-   - Har bir savoldan keyin javobning ilmiy izohi va tushuntirishi.
-
-3. 📖 **Biologik Terminlar Lug'ati (Smart Search):**
-   - 25+ dan ortiq fundamental biologik terminlar bazasi (Mitoz, Meyoz, Fotosintez, ATF, Gomologik organlar va h.k.).
-   - Foydalanuvchi qidirmoqchi bo'lgan so'zni yozishi bilan tezkor ta'rifni topib beradi.
-
-4. 💡 **Qiziqarli Faktlar:**
-   - Tirik tabiat va organizmlar haqida qiziqarli va hayratlanarli ilmiy faktlar.
-
-5. 🏆 **Reyting va Shaxsiy Profil:**
-   - Foydalanuvchining to'plagan ballari, yechgan testlari soni va aniqlik foizi.
-   - Top-10 yetakchilar reyting jadvali (Leaderboard).
+Bot manzili: [@takeabiobot](https://t.me/takeabiobot)
 
 ---
 
-## 📁 Loyiha Tuzilishi
+## 🌟 Asosiy Imkoniyatlar
+
+1. 🌟 **Instagram BIO Generator:**
+   - Foydalanuvchi faoliyati, qiziqishlari yoki shioriga mos 4 xil estetik va tayyor BIO varianti.
+   - Chiroyli emojilar, qator ajratishlar va Call-to-Action (havolaga yo'naltiruvchi) elementlari.
+2. 🏷 **Noyob Username Generator:**
+   - Ism, brend yoki kalit so'z bo'yicha 10-12 ta zamonaviy, esda qolarli nikneym g'oyalari.
+3. ✍️ **Post & Story Caption:**
+   - Diqqatni jalb qiluvchi kuchli Hook, qiziqarli asosiy qism va munosabat bildirishga chorlovchi xulosalar.
+4. #️⃣ **Mos Hashtaglar To'plami:**
+   - Katta qamrovli, o'rta qamrovli va tor nisha bo'yicha saralangan 25-30 ta samarali hashtaglar.
+5. 💬 **Aesthetic Status va Iqtiboslar:**
+   - Instagram Notes, Telegram Bio va Stories uchun chuqur ma'noli, chiroyli sitatalar.
+6. 🎨 **5 Xil Uslub (Tone & Style):**
+   - ✨ **Aesthetic:** Nafis, shinam, chiroyli shrift va simvollar bilan.
+   - 🌿 **Minimal:** Qisqa, lo'nda, sodda va ortiqcha bezaklarsiz.
+   - 💼 **Professional:** Biznes, rasmiy, ekspert va ishonchli ohangda.
+   - 😂 **Funny:** Do'stona, kulgili va samimiy hazilomuz kayfiyatda.
+   - 🚀 **Creative:** Noodatiy, yangicha va diqqatni darhol tortuvchi.
+
+---
+
+## 🧠 Sun'iy Intellekt va Optimallashtirish
+
+- **Google Gemini API Integratsiyasi:** `gemini-3.5-flash-lite`, `gemini-3.5-flash` va `gemma-4-26b-a4b-it` modellar zanjiri orqali uzluksiz generatsiya.
+- **Tezkor SQLite Keshlash:** Takroriy so'rovlar avval keshdan tekshiriladi, natija bir zumda beriladi va API kvotasi tejaladi.
+- **Spam Himoyasi (Cooldown):** Har bir foydalanuvchi so'rovlari orasida 5 soniyalik kutish vaqti.
+- **Kunlik Limitlar Boshqaruvi:** Bepul tier uchun kunlik limitlar nazorati va qoldiq ko'rsatgichi.
+- **Aqlli Zaxira Shablonlar (Offline Fallback):** Agar API limiti tugasa yoki internetda uzilish bo'lsa ham, bot foydalanuvchini javobsiz qoldirmaydi.
+
+---
+
+## 📁 Loyiha Strukturasi
 
 ```text
 BioCraft/
-├── data/
-│   ├── __init__.py
-│   ├── biology_topics.py   # Bo'limlar va darsliklar
-│   ├── quiz_questions.py   # Test savollari va javoblar izohi
-│   ├── glossary.py         # Terminlar lug'ati va qidiruv
-│   └── facts.py            # Qiziqarli biologik faktlar
+├── assets/
+│   └── banner.png            # Start buyrug'idagi taqdimot rasmi
 ├── handlers/
 │   ├── __init__.py
-│   ├── start.py            # /start, /help va xush kelibsiz
-│   ├── topics.py           # Darsliklar va bo'limlar navigatsiyasi
-│   ├── quiz.py             # Viktorina va test jarayoni
-│   ├── glossary.py         # Lug'at va qidiruv handleri
-│   ├── facts.py            # Tasodifiy faktlar
-│   └── profile.py          # Profil va reyting (top-10)
+│   ├── start.py              # /start, rasm bilan xush kelibsiz va /help
+│   ├── bio.py                # Instagram BIO generatsiya oqimi
+│   ├── username.py           # Username g'oyalari generatsiyasi
+│   ├── caption.py            # Post & Story caption yaratish
+│   ├── hashtag.py            # Hashtag to'plamlari
+│   ├── status.py             # Status va iqtiboslar
+│   ├── settings.py           # 5 xil uslubni tanlash va saqlash
+│   ├── profile.py            # Profil, statistika va limitlar
+│   └── states.py             # aiogram 3 FSM holatlari
 ├── keyboards/
 │   ├── __init__.py
-│   ├── main_menu.py        # Asosiy menyu (Reply Keyboard)
-│   └── inline_keyboards.py # Inline navigatsiya va test tugmalari
-├── .env.example            # Muhit o'zgaruvchilari namunasi
-├── .gitignore              # Xavfsizlik va keraksiz fayllar filtri
-├── bot.py                  # Asosiy ishga tushiruvchi fayl
-├── config.py               # Sozlamalar va .env o'quvchi modul
-├── database.py             # SQLite ma'lumotlar bazasi boshqaruvi
-├── requirements.txt        # Kerakli Python kutubxonalari
-└── README.md               # Qo'llanma va hujjatlar
+│   ├── main_menu.py          # Asosiy ReplyKeyboardMarkup menyusi
+│   └── inline_keyboards.py   # Inline uslub va harakatlar tugmalari
+├── services/
+│   ├── __init__.py
+│   └── gemini_service.py     # Asinxron Google Gemini mijozi, kesh va fallback
+├── .env.example              # Muhit o'zgaruvchilari namunasi
+├── .gitignore                # Maxfiy kalitlar va keshlarni yashirish
+├── bot.py                    # Asosiy ishga tushiruvchi dastur
+├── config.py                 # Bot va API sozlamalari
+├── database.py               # SQLite foydalanuvchilar va kesh bazasi
+├── requirements.txt          # Kerakli Python kutubxonalari
+└── README.md                 # Hujjatlar va qo'llanma
 ```
 
 ---
 
 ## 🚀 Ishga Tushirish Yo'riqnomasi
 
-### 1. Loyihani yuklab olish va o'tish:
+### 1. Loyihani yuklab olish:
 ```bash
 git clone https://github.com/nozaninabduganiyeva4-eng/BioCraft.git
 cd BioCraft
 ```
 
-### 2. Virtual muhit yaratish va faollashtirish (ixtiyoriy):
-```bash
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-```
-
-### 3. Kutubxonalarni o'rnatish:
+### 2. Kutubxonalarni o'rnatish:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. `.env` faylini sozlash:
-`.env.example` faylidan nusxa olib `.env` yarating va BotFather bergan tokenni kiriting:
+### 3. `.env` faylini sozlash:
+Loyiha ildizida `.env` faylini yarating va quyidagi kalitlarni kiriting:
 ```ini
 BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN_HERE
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
 ```
 
-### 5. Botni ishga tushirish:
+### 4. Botni ishga tushirish:
 ```bash
 python bot.py
 ```
 
+Ishga tushirgach, Telegramda **[@takeabiobot](https://t.me/takeabiobot)** botingizga `/start` yuboring!
+
 ---
 
-## 🔒 Xavfsizlik Eslatmasi
-Bot tokeni maxfiy ma'lumot hisoblanadi. Hech qachon haqiqiy tokenni GitHub ommaviy repozitoriyalariga commit qilmang. Shu sababli `.env` fayli `.gitignore` ga qo'shilgan.
+## 🔒 Xavfsizlik
+`.env` faylidagi barcha maxfiy kalitlar (Bot Token va Gemini API Key) [`.gitignore`](.gitignore) orqali himoyalangan va GitHub'ga yuklanmaydi.
 
 ---
 
