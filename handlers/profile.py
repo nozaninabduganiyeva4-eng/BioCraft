@@ -1,62 +1,33 @@
 from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
-from database import get_user_stats, get_top_users
+from aiogram.types import Message
+from database import get_user_profile
+from config import DAILY_REQUEST_LIMIT, AVAILABLE_STYLES
 
 router = Router()
 
 
-@router.message(F.text == "👤 Profilim")
+@router.message(F.text == "👤 Profil & Limitlar")
 async def show_profile(message: Message):
     user_id = message.from_user.id
-    stats = get_user_stats(user_id)
+    prof = get_user_profile(user_id)
 
-    if not stats:
-        await message.answer("Siz haqingizda ma'lumot topilmadi. Qaytadan /start bosing.")
-        return
-
-    accuracy = (
-        round((stats["correct_answers"] / stats["quizzes_taken"]) * 100, 1)
-        if stats["quizzes_taken"] > 0
-        else 0
-    )
+    style_key = prof.get("selected_style", "aesthetic")
+    style_label = AVAILABLE_STYLES.get(style_key, {}).get("name", "✨ Aesthetic")
+    requests_today = prof.get("requests_today", 0)
+    remaining_today = max(0, DAILY_REQUEST_LIMIT - requests_today)
+    total_requests = prof.get("total_requests", 0)
+    created_at = str(prof.get("created_at", "Yaqinda"))[:10]
 
     text = (
-        "👤 <b>Sizning Profillaringiz</b>\n\n"
-        f"🏷 <b>Ism:</b> {stats['first_name']}\n"
-        f"🆔 <b>ID:</b> <code>{stats['user_id']}</code>\n"
-        f"⭐ <b>Jami ball:</b> {stats['score']} ball\n"
-        f"🧪 <b>Yechilgan testlar:</b> {stats['quizzes_taken']} ta\n"
-        f"✅ <b>To'g'ri javoblar:</b> {stats['correct_answers']} ta\n"
-        f"🎯 <b>Aniqlik darajasi:</b> {accuracy}%\n"
-        f"📅 <b>Ro'yxatdan o'tgan:</b> {stats['joined_at'][:10]}\n\n"
-        "<i>Viktorinada qatnashib ballaringizni oshiring va reytingda yetakchi bo'ling!</i>"
+        "👤 <b>Foydalanuvchi Profili va Limitlar</b>\n\n"
+        f"🆔 <b>ID:</b> <code>{user_id}</code>\n"
+        f"🏷 <b>Ism:</b> {prof.get('first_name', 'Foydalanuvchi')}\n"
+        f"🎨 <b>Tanlangan uslub:</b> {style_label}\n\n"
+        "📊 <b>So'rovlar statistikasi:</b>\n"
+        f"• 📅 Bugun ishlatildi: <b>{requests_today} / {DAILY_REQUEST_LIMIT}</b> ta\n"
+        f"• ⚡ Qolgan limit: <b>{remaining_today}</b> ta\n"
+        f"• 🚀 Jami yaratilgan kontentlar: <b>{total_requests}</b> ta\n"
+        f"• 🗓 Ro'yxatdan o'tgan: {created_at}\n\n"
+        "💡 <i>Eslatma: Kunlik bepul limit har kuni soat 00:00 da avtomatik yangilanadi.</i>"
     )
     await message.answer(text=text, parse_mode="HTML")
-
-
-@router.message(F.text == "🏆 Reyting")
-@router.callback_query(F.data == "view_ranking")
-async def show_ranking(event: Message | CallbackQuery):
-    top_users = get_top_users(limit=10)
-
-    lines = ["🏆 <b>BioCraft — Bilimdonlar Reytingi (Top-10)</b>\n"]
-    medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
-
-    if not top_users:
-        lines.append("Hozircha reytingda hech kim yo'q. Birinchi bo'lib test ishlang!")
-    else:
-        for idx, u in enumerate(top_users):
-            medal = medals[idx] if idx < len(medals) else f"{idx+1}."
-            name = u["first_name"] or "Foydalanuvchi"
-            lines.append(
-                f"{medal} <b>{name}</b> — <b>{u['score']} ball</b> "
-                f"<i>({u['correct_answers']}/{u['quizzes_taken']} to'g'ri)</i>"
-            )
-
-    ranking_text = "\n".join(lines)
-
-    if isinstance(event, CallbackQuery):
-        await event.message.answer(text=ranking_text, parse_mode="HTML")
-        await event.answer()
-    else:
-        await event.answer(text=ranking_text, parse_mode="HTML")
